@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script>window.update = function(){};</script>
+    <title>BIOSONIC-tensoflow</title>
+    <style>
+        /* Estilos CSS para la página */
+        html,body{height:100%}
+        body{padding:0;margin:0;background:#111;position:relative;z-index:2;overflow:hidden;}
+        #audioContainer{position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);z-index:1;text-align:center;}
+        div{font-size:28px;color:#191919;pointer-events:none;font-family:Arial}
+        img{max-width: 100%; max-height: 100%; display: none;} /* Añadido: estilos para la imagen */
+        #e, #d, #f{
+            cursor:pointer;
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            display: block;
+            height: 20px;
+            z-index: 99999;
+            background: #eaeaea;
+            left:auto;
+            border-radius:4px;
+            font-family: sans-serif;
+            font-size: 9px;
+            width: 82px;
+            line-height: 20px;
+            padding: 0 6px;
+            text-align: center;
+            opacity:0.9;
+            user-select:none;
+        }
+
+        /* Estilos específicos cuando la clase 'b' está presente en el body */
+        .b #e, .b #d{
+            top:12px;
+        }
+
+        .b #e, .b #f{
+            display:block;
+        }
+
+        #e{
+            right: 106px;
+            width: 10px;
+            line-height: 20px;
+            padding: 0px 6px;
+            text-align: center;
+            opacity: 0.9;
+            display:none;
+        }
+
+        #f{
+            left: 0;
+            right: 0;
+            top: 0;
+            padding: 0;
+            width: 100%;
+            line-height: 0;
+            border-radius: 0;
+            height: 4px;
+            background: #333;
+            display:none;
+            user-select:none;
+            -moz-user-select:none;
+        }
+
+        .c #f, #f:hover{
+            background:#3C3C3C;
+        }
+
+    </style>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <!-- Elemento en el cuerpo de la página para mostrar el nombre del audio y la imagen -->
+    <div id="audioContainer">
+        <div id="audioName">Nombre del Audio</div>
+        <img id="audioImage" src="" alt="Audio Image"> <!-- Añadido: etiqueta img para la imagen -->
+    </div>
+
+    <!-- Etiquetas ancladas (a) con identificadores (d, e, f) y funciones JavaScript asociadas -->
+    <a id="d" onclick="dock()">INTERFAZ DE ACOPLAMIENTO</a>
+    <a id="e" onclick="remove()">X</a>
+    <a id="f" onmousedown="drag(event)"></a>
+
+    <!-- Importa audios.js -->
+    <script type="module" src="./audios.js"></script>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Variables y funciones JavaScript
+        var w = window;
+        var iframe = location.href.indexOf('?iframe') === -1 ? 0 : 1;
+
+        w.remove = function (){};
+
+        // Configuración específica si la página está embebida en un iframe
+        if (iframe) {
+            document.body.className = 'b';
+            w.remove = function () {
+                w.parent.PKAudioEditor.ui.Dock ('RequestShowFreqAn', 'tensoflow', [1, 1]);
+            };
+        };
+
+        w.drag = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            w.parent.PKAudioEditor.ui.Dock('RequestDragI', 'tensoflow');
+        };
+
+        w.dock = function () {
+            if (!iframe) {
+                if (!w.opener || !w.opener.PKAudioEditor) {
+                    return;
+                }
+                w.opener.PKAudioEditor.ui.Dock('RequestShowFreqAn', 'tensoflow', [1, 1]);
+                w.close && w.close();
+            } else {
+                var frm = w.parent.document.getElementById('pk_fr' + 'tensoflow');
+                var t = 1;
+                if (frm && frm.getBoundingClientRect) {
+                    var rect = frm.getBoundingClientRect();
+                    t = [(w.parent.screenLeft + rect.left + 100) || 0, (w.parent.screenTop + rect.top + 25) || 0];
+                }
+                w.parent.PKAudioEditor.ui.Dock('RequestShowFreqAn', 'tensoflow', [t, 0]);
+            }
+        };
+
+        // Configuración de la página
+        setTimeout(function () {
+            if (!iframe) {
+                if (!w.opener || !w.opener.PKAudioEditor) return;
+            }
+
+            var nameElement = document.getElementById('audioName');
+            var imageElement = document.getElementById('audioImage'); // Añadido: referencia a la imagen
+
+            w.update = function (audioId) {
+                const audioInfo = audioData.find(audio => audio.id === audioId);
+                nameElement.innerText = audioInfo ? audioInfo.name : "Nombre del Audio";
+                imageElement.src = audioInfo ? audioInfo.image : ""; // Añadido: establece la imagen
+                imageElement.style.display = audioInfo ? "block" : "none"; // Añadido: muestra/oculta la imagen
+            };
+
+            var last_press = 0;
+            document.addEventListener('keypress', function (e) {
+                if (e.keyCode !== 32) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (e.timeStamp - last_press < 100) {
+                    return;
+                }
+
+                last_press = e.timeStamp;
+
+                if (!iframe) {
+                    w.opener && w.opener.PKAudioEditor.ui.Dock('RequestKeyDown', 32);
+                } else {
+                    w.parent && w.parent.PKAudioEditor.ui.Dock('RequestKeyDown', 32);
+                }
+            });
+
+        }, 60);
+    </script>
+</body>
+</html>

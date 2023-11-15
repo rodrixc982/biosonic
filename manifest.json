@@ -1,0 +1,14 @@
+{
+  "name": "BIOSONIC",
+  "short_name": "AUDIO-IAP CRISTIAN RODRIGUEZ",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "IIAP-Logo.ico",
+      "type": "image/ico",
+      "sizes": "144x144"
+    }
+  ]
+}

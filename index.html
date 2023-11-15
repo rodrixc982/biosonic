@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>BIOSONIC V1.1</title>
+	<link href="about/Imagen1-modified.png" rel="shortcut icon">
+	<meta charset="utf-8" />
+	<link rel="manifest" href="manifest.json">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+	<meta name="description" content="Cristian Rodriguez &amp; PROCESADOR DE AUDIO"/>
+	<meta property="og:image" content="about/Presentación1-fotor-bg-remover-2023102984527.ico"/>
+	<meta property="og:title" content="AUDIO IIAP">
+	<meta property="og:url" content="https://www.gob.pe/iiap">
+	<meta property="og:description" content="AUDIO IIAP-2023 ES SOLAMENTE PARA EL IIAP &amp; IQUITOS-PERU 2023">
+	<meta name="keywords" content="AUDIO-IIAP, 2023 ">
+	<link rel="apple-touch-icon" href="about/Presentación1-fotor-bg-remover-2023102984527.ico">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="AUDIO-IIAP">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@rodrixc_tianz">
+	<meta name="twitter:creator" content="@rodrixc_tianz
+	<meta name="twitter:title" content="AUDIO IIAP ">
+	<meta name="twitter:description" content="AUDIO-IIAP 2023 &amp; Cristian Rodriguez">
+	<meta name="twitter:image" content="about/Presentación1-fotor-bg-remover-2023102984527.ico">
+
+	
+
+
+	
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script src="dista/wavesurfer.js"></script>
+	<script src="dista/plugin/wavesurfer.regions.js"></script>
+	<script src="oneup.js"></script>
+	<script src="server.js"></script>
+
+	<script src="app.js"></script>
+	<script src="keys.js"></script>
+	<script src="contextmenu.js"></script>
+	<script src="ui-fx.js"></script>
+	<script src="ui.js"></script>
+	<script src="modal.js"></script>
+	<script src="state.js"></script>
+	<script src="engine.js"></script>
+	<script src="actions.js"></script>
+	<script src="drag.js"></script>
+	<script src="recorder.js"></script>
+	<script src="server.js"></script>
+	
+
+	<script src="welcome.js"></script>
+	<script src="fx-pg-eq.js"></script>
+	<script src="fx-auto.js"></script>
+	<script src="local.js"></script>
+	<script src="id3.js"></script>
+	<script src="lzma.js"></script>
+    
+	
+	
+    
+
+<!--
+	<script src="multitrack.js"></script>
+	<script src="multitrack-ui.js"></script>
+-->
+	<script>
+		var editor = PKAudioEditor.init ('app');
+
+		if ('serviceWorker' in navigator) {
+			try {
+			//	navigator.serviceWorker.register( 'sw.js' );
+			} catch ( error ) {}
+		}
+	</script>
+
+</body>
+</html>
